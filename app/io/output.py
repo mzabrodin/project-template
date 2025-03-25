@@ -7,7 +7,7 @@ def output_to_console(text):
     Args:
         text (str): The text to print in console.
     """
-    pass
+    print(text)
 
 
 def output_to_file(file_name, text):
@@ -20,7 +20,11 @@ def output_to_file(file_name, text):
     Raises:
         FileExistsError: If a file with the name ‘file_name’ already exists.
     """
-    pass
+    try:
+        with open(file_name, 'x') as file:
+            file.write(text)
+    except FileExistsError:
+        raise FileExistsError(f"File named '{file_name}' already exists")
 
 
 def output_to_file_using_pandas(file_name, data_frame):
@@ -31,7 +35,9 @@ def output_to_file_using_pandas(file_name, data_frame):
         data_frame (pd.DataFrame): The text to write in file.
 
     Raises:
-        FileExistsError: If a file with the name ‘file_name’ already exists.
         TypeError: If the data_frame is not an instance of DataFrame.
     """
-    pass
+    if not isinstance(data_frame, pd.DataFrame):
+        raise TypeError("The data_frame argument must be instance of Pandas DataFrame")
+
+    data_frame.to_csv(file_name, index=False)

@@ -7,7 +7,7 @@ def input_from_console():
     Returns:
         str: The text read in the console.
     """
-    pass
+    return input("Enter text: ")
 
 
 def input_from_file(file_name):
@@ -22,7 +22,11 @@ def input_from_file(file_name):
     Raises:
         FileNotFoundError: If the file with the name ‘file_name’ is not found.
     """
-    pass
+    try:
+        with open(file_name, 'r') as file:
+            return file.read()
+    except FileNotFoundError:
+        raise FileNotFoundError(f"File named '{file_name}' was not found")
 
 
 def input_from_file_using_pandas(csv_file_name):
@@ -38,4 +42,10 @@ def input_from_file_using_pandas(csv_file_name):
         FileNotFoundError: If the file with the name ‘file_name’ is not found.
         TypeError: If the file does not have a .csv extension.
     """
-    pass
+    if not csv_file_name.endswith(".csv"):
+        raise TypeError("The file must be .csv")
+
+    try:
+        return pd.read_csv(csv_file_name)
+    except FileNotFoundError:
+        raise FileNotFoundError(f"File named '{csv_file_name}' was not found")
